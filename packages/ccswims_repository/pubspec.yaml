@@ -1,0 +1,17 @@
+name: ccswims_repository
+description: Simple in memory cache
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  cache:
+    path: ../cache
+  equatable: ^2.0.5
+  dio: ^5.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
