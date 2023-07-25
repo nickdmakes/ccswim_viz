@@ -18,7 +18,9 @@ class SwimmerSearchBloc extends Bloc<SwimmerSearchEvent, SwimmerSearchState> {
   Future<void> _onSearchSwimmer(SearchSwimmer event, Emitter<SwimmerSearchState> emit) async {
     emit(SwimmerSearchLoading());
     try {
-      final swimmers = await _ccswimsRepository.swimmerSearch(event.fullnameSearch, event.clubSearch);
+      // TODO: Remove this mock data
+      final swimmers = await _ccswimsRepository.mockSwimmerSearch();
+      // final swimmers = await _ccswimsRepository.swimmerSearch(event.fullnameSearch, event.clubSearch);
       emit(SwimmerSearchSuccessful(fullnameSearch: event.fullnameSearch, clubSearch: event.clubSearch, swimmers: swimmers));
     } catch(e) {
       emit(SwimmerSearchFailed());

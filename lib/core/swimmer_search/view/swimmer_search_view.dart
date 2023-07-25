@@ -2,6 +2,8 @@ import 'package:ccswim_viz/core/swimmer_search/bloc/swimmer_search/swimmer_searc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../widgets/InteractiveDataTable/interactive_data_table.dart';
+
 class SwimmerSearchView extends StatelessWidget {
   const SwimmerSearchView({super.key});
 
@@ -24,18 +26,7 @@ class SwimmerSearchView extends StatelessWidget {
             } else if(state is SwimmerSearchLoading) {
               return const CircularProgressIndicator();
             } else if(state is SwimmerSearchSuccessful) {
-              return DataTable(
-                  columns: const <DataColumn>[
-                    DataColumn(label: Text("Name")),
-                    DataColumn(label: Text("Club")),
-                  ],
-                  rows: List<DataRow>.generate(
-                    state.swimmers.length,
-                    (int index) => DataRow(
-                      cells: <DataCell>[DataCell(Text("${state.swimmers[index]["fullname"]}")), DataCell(Text("${state.swimmers[index]["club"]}"))]
-                    ),
-                  ),
-              );
+              return InteractiveDataTable(tableData: state.swimmers);
             } else {
               return const Center(
                 child: Text("Failure"),

@@ -1,4 +1,5 @@
 import 'ccswims_api.dart';
+import 'dart:convert';
 
 class CCSwimsRepository {
   CCSwimsRepository({CCSwimsApiClient? ccswimsApiClient})
@@ -17,6 +18,12 @@ class CCSwimsRepository {
       _ccswimsApiClient.cache.write<List<dynamic>>(key: swimmerSearchHash, value: swimmers);
       return swimmers;
     }
+  }
+
+  /// Get mock data for swimmers
+  Future<dynamic> mockSwimmerSearch() async {
+    List<dynamic> mockSwimmers = [{"fullname":"Nicholas Madel","club":"JMU"},{"fullname":"Nicholas Matthews","club":"ISUSC"},{"fullname":"Nicholas Matyas","club":"WVAU"},{"fullname":"Nicholas Matyas","club":"WVU"}];
+    return mockSwimmers;
   }
 
   /// Search CCSwims database for all times for a specific swimmer
