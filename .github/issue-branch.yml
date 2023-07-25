@@ -1,0 +1,8 @@
+mode: chatops # only create branch when "/cib" is commented on issue
+
+branchName: '${issue.number}-${issue.title,}'
+gitSafeReplacementChar: '-'
+
+autoCloseIssue: true
+
+openPR: true
