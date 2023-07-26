@@ -17,7 +17,7 @@ class SwimmerName extends FormzInput<String, SwimmerNameValidationError> {
   const SwimmerName.dirty([super.value = '']) : super.dirty();
 
   static final RegExp _firstNameRegExp = RegExp(
-    r'^[a-zA-Z]+ [a-zA-Z]+$',
+    r'^(?!.*\s{2})\b\w+(?: \w+)?\b$',
   );
 
   @override

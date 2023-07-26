@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:ccswim_viz/shared/dashboard_card/dashboard_card.dart';
-import '../widgets/InteractiveDataTable/interactive_data_table.dart';
 import '../widgets/swimmer_lookup_panel/swimmer_lookup_panel.dart';
 
 class SwimmerSearchView extends StatelessWidget {
