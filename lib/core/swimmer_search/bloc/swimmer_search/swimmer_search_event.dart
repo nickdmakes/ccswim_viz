@@ -13,3 +13,5 @@ class SearchSwimmer extends SwimmerSearchEvent {
   final String fullnameSearch;
   final String clubSearch;
 }
+
+class ResetSwimmerSearch extends SwimmerSearchEvent {}

@@ -13,10 +13,11 @@ class SwimmerSearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Swimmer Search")
+        title: const Text("Swimmer Search"),
+        centerTitle: false,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: BlocProvider(
           create: (_) => SwimmerSearchBloc(context.read<CCSwimsRepository>()),
             child: const SwimmerSearchView(),

@@ -41,7 +41,9 @@ class _DashboardInputFieldState extends State<DashboardInputField> {
       onSubmitted: widget.onSubmitted,
       onChanged: widget.onChanged,
       keyboardType: widget.keyboardType,
+      style: TextStyle(color: neutral[4], fontSize: 14.0),
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.all(16.0),
         suffixIcon: _textController.text.isEmpty
           ? null
           : IconButton(
@@ -51,19 +53,19 @@ class _DashboardInputFieldState extends State<DashboardInputField> {
               widget.onChanged!('');
             }
           },
-          icon: const Icon(Icons.clear),
+          icon: const Icon(Icons.clear, size: 14),
           splashRadius: 10,
         ),
-        isDense: true,
+        isCollapsed: true,
         hintText: widget.placeholder,
-        hintStyle: TextStyle(color: neutral[1]),
+        hintStyle: TextStyle(color: neutral[2]),
         helperText: ' ',
         helperStyle: const TextStyle(fontSize: 0),
         errorText: widget.errorText,
         errorStyle: const TextStyle(fontSize: 0),
         focusedBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
-            borderSide: BorderSide(width: 1.5, color: primary[4])
+            borderSide: BorderSide(width: 1.5, color: primary[3])
         ),
         enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),

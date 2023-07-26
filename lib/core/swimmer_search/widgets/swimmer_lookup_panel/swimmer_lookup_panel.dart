@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'cubit/swimmer_lookup_panel_cubit.dart';
 import 'package:ccswim_viz/core/swimmer_search/bloc/swimmer_search/swimmer_search_bloc.dart';
+import 'package:ccswim_viz/shared/dashboard_table/dashboard_table.dart';
 import 'package:ccswim_viz/shared/dashboard_input_field/dashboard_input_field.dart';
 
 class SwimmerLookupPanel extends StatelessWidget {
@@ -20,15 +21,17 @@ class SwimmerLookupPanel extends StatelessWidget {
           Row(
             children: [
               Expanded(
+                flex: 5,
                 child: _SwimmerNameInput(),
               ),
               SizedBox(width: 4.0),
               Expanded(
+                flex: 4,
                 child: _ClubNameInput(),
               ),
             ],
           ),
-          _SwimmerLookupBody(),
+          Expanded(child: _SwimmerLookupBody()),
         ],
       ),
     );
@@ -92,13 +95,11 @@ class _SwimmerLookupBody extends StatelessWidget {
       buildWhen: (previous, current) => previous.error != current.error,
       builder: (context, state) {
         if(state.error == SwimmerLookupSubmissionError.invalidSubmission) {
-          return Expanded(
-            child: Center(child: _errorText(
-                "*Invalid Search*\n\nAt least one field must not be blank\n\n- Name must be in format [Firstname] [Lastname]\n- Club must be in format [Club]",
-            )),
-          );
+          return Center(child: _errorText(
+              "*Invalid Search*\n\nAt least one field must not be blank\n\n- Name must be in format [Firstname] [Lastname]\n- Club must be in format [Club]",
+          ));
         } else {
-          return Expanded(child: Container(color: Colors.amber));
+          return const _SwimmerLookupTable();
         }
       },
     );
@@ -114,3 +115,37 @@ class _SwimmerLookupBody extends StatelessWidget {
     );
   }
 }
+
+class _SwimmerLookupTable extends StatelessWidget {
+  const _SwimmerLookupTable({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SwimmerSearchBloc, SwimmerSearchState>(
+      builder: (context, state) {
+        if(state is SwimmerSearchNotStarted) {
+          return DashboardTable(
+            tableData: [],
+            columnNames: const ["Name", "Club"],
+            onRowSelected: (_) => {print("Row Selected")},
+          );
+        } else if(state is SwimmerSearchLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if(state is SwimmerSearchSuccessful) {
+          return DashboardTable(
+            tableData: state.swimmers,
+            columnNames: const ["Name", "Club"],
+            headerTitle: Text(
+              "Results for (${state.fullnameSearch}) / (${state.clubSearch})", style: TextStyle(color: neutral[3]),
+              overflow: TextOverflow.ellipsis,
+            ),
+            onClearPressed: () => context.read<SwimmerSearchBloc>().add(ResetSwimmerSearch()),
+          );
+        } else {
+          return const Center(child: Text("Error"));
+        }
+      },
+    );
+  }
+}
+

@@ -15,7 +15,7 @@ class DashboardCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ConstrainedBox(
-          constraints: const BoxConstraints.expand(height: 600),
+          constraints: const BoxConstraints.expand(height: 450),
           child: child ?? const Placeholder(),
         ),
       ),

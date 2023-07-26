@@ -11,6 +11,7 @@ part 'swimmer_search_event.dart';
 class SwimmerSearchBloc extends Bloc<SwimmerSearchEvent, SwimmerSearchState> {
   SwimmerSearchBloc(this._ccswimsRepository) : super(SwimmerSearchNotStarted()) {
     on<SearchSwimmer>(_onSearchSwimmer);
+    on<ResetSwimmerSearch>(_onResetSwimmerSearch);
   }
 
   final CCSwimsRepository _ccswimsRepository;
@@ -25,5 +26,9 @@ class SwimmerSearchBloc extends Bloc<SwimmerSearchEvent, SwimmerSearchState> {
     } catch(e) {
       emit(SwimmerSearchFailed());
     }
+  }
+
+  void _onResetSwimmerSearch(ResetSwimmerSearch event, Emitter<SwimmerSearchState> emit) {
+    emit(SwimmerSearchNotStarted());
   }
 }
