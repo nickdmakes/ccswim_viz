@@ -18,6 +18,6 @@ jobs:
           flutter-version: '3.7.7'
           channel: 'stable'
       - name: Build flutter app for web
-      - run: flutter build web
+        run: flutter build web
       - name: Copy build to Nginx server directory
-      - run: cp ./build/web /var/www/ccswimviz.com/html
+        run: cp ./build/web /var/www/ccswimviz.com/html
