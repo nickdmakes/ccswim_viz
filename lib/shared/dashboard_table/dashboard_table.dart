@@ -98,17 +98,9 @@ class _PaginatedHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              BlocBuilder<SwimmerSearchBloc, SwimmerSearchState>(
-                builder: (context, state) {
-                  if(state is SwimmerSearchSuccessful) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: headerTitle ?? Container(),
-                    );
-                  } else {
-                    return Container();
-                  }
-                }
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: headerTitle ?? Container(),
               ),
               const Spacer(),
               IconButton(
