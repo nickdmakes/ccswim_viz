@@ -23,7 +23,7 @@ class CCSwimsApiClient {
   /// Retrieves swimmers times from usa swimming website
   Future<List<dynamic>> swimmerSearchRequest(String fullnameSearch, String clubSearch) async {
     final fullnameCleaned = fullnameSearch.replaceAll(" ", "+");
-    final response = await Dio().get("http://ccswimviz.com:8000/swimmers/?fullname=${fullnameCleaned}&club=${clubSearch}",
+    final response = await Dio().get("https://ccswimviz.com:8000/swimmers/?fullname=${fullnameCleaned}&club=${clubSearch}",
         options: Options(
           responseType: ResponseType.plain,
         ));
