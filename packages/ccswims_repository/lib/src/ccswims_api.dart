@@ -44,3 +44,4 @@ class CCSwimsApiClient {
     return decoded;
   }
 }
+
