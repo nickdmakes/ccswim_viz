@@ -1,0 +1,23 @@
+name: ccswimviz-deploy
+on:
+  push:
+    branches:
+      - master
+      
+  workflow_dispatch:
+
+# Jobs to be run
+jobs:
+  build:
+    runs-on: self-hosted
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.6'
+          channel: 'stable'
+      - name: Build flutter app for web
+        run: flutter build web
+      - name: Copy build to Nginx server directory
+        run: sudo cp -r ./build/web /var/www/ccswimviz.com/html
