@@ -20,4 +20,4 @@ jobs:
       - name: Build flutter app for web
         run: flutter build web
       - name: Copy build to Nginx server directory
-        run: cp -r ./build/web /var/www/ccswimviz.com/html
+        run: sudo cp -r ./build/web /var/www/ccswimviz.com/html
