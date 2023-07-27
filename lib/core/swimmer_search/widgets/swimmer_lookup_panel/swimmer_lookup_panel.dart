@@ -1,3 +1,4 @@
+import 'package:ccswim_viz/core/swimmer_search/bloc/all_swimmer_times/all_swimmer_times_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:ccswim_viz/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,7 +40,7 @@ class SwimmerLookupPanel extends StatelessWidget {
 }
 
 class _SwimmerNameInput extends StatelessWidget {
-  const _SwimmerNameInput({super.key});
+  const _SwimmerNameInput();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class _SwimmerNameInput extends StatelessWidget {
 }
 
 class _ClubNameInput extends StatelessWidget {
-  const _ClubNameInput({super.key});
+  const _ClubNameInput();
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +88,7 @@ class _ClubNameInput extends StatelessWidget {
 }
 
 class _SwimmerLookupBody extends StatelessWidget {
-  const _SwimmerLookupBody({super.key});
+  const _SwimmerLookupBody();
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +118,7 @@ class _SwimmerLookupBody extends StatelessWidget {
 }
 
 class _SwimmerLookupTable extends StatelessWidget {
-  const _SwimmerLookupTable({super.key});
+  const _SwimmerLookupTable();
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +126,9 @@ class _SwimmerLookupTable extends StatelessWidget {
       builder: (context, state) {
         if(state is SwimmerSearchNotStarted) {
           return DashboardTable(
-            tableData: [],
+            tableData: const [],
             columnNames: const ["Name", "Club"],
-            onRowSelected: (_) => {print("Row Selected")},
+            columnKeys: const ["fullname", "club"],
           );
         } else if(state is SwimmerSearchLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -135,10 +136,12 @@ class _SwimmerLookupTable extends StatelessWidget {
           return DashboardTable(
             tableData: state.swimmers,
             columnNames: const ["Name", "Club"],
+            columnKeys: const ["fullname", "club"],
             headerTitle: Text(
               "Results for (${state.fullnameSearch}) / (${state.clubSearch})", style: TextStyle(color: neutral[3]),
               overflow: TextOverflow.ellipsis,
             ),
+            onRowSelected: (index) => context.read<AllSwimmerTimesBloc>().add(FetchAllSwimmerTimes(fullname: state.swimmers[index]["fullname"], club: state.swimmers[index]["club"])),
             onClearPressed: () => context.read<SwimmerSearchBloc>().add(ResetSwimmerSearch()),
           );
         } else {
@@ -148,4 +151,3 @@ class _SwimmerLookupTable extends StatelessWidget {
     );
   }
 }
-

@@ -24,14 +24,24 @@ class DashboardTableCubit extends Cubit<DashboardTableState> {
     emit(state.copyWith(tableData: tableData));
   }
 
+  void reset() {
+    emit(const DashboardTableState());
+  }
+
   // Function to get the max number of pages
   int get maxPages {
+    if(state.tableData.isEmpty) {
+      return 0;
+    }
     final int maxPages = (state.tableData.length / state.rowsPerPage).floor();
     return maxPages;
   }
 
   // Function to get the data for the current page
   List<dynamic> get pageTableData {
+    if(state.tableData.isEmpty) {
+      return [];
+    }
     final int startIndex = state.page * state.rowsPerPage;
     final int endIndex = min((state.page + 1) * state.rowsPerPage, state.tableData.length);
     return state.tableData.sublist(startIndex, endIndex);

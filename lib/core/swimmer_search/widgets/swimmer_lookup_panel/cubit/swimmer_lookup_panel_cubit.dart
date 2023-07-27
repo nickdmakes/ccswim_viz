@@ -50,7 +50,7 @@ class SwimmerLookupPanelCubit extends Cubit<SwimmerLookupPanelState> {
     }
   }
 
-  // Allow empty searches by only requiring one of the fields to be populated
+  // Allow partially empty searches by only requiring one of the fields to be populated
   bool _validForSubmission() {
     if(state.swimmerName.value.isEmpty) {
       if(state.clubName.valid) {

@@ -12,6 +12,9 @@ class SearchSwimmer extends SwimmerSearchEvent {
 
   final String fullnameSearch;
   final String clubSearch;
+
+  @override
+  List<Object> get props => [fullnameSearch, clubSearch];
 }
 
 class ResetSwimmerSearch extends SwimmerSearchEvent {}

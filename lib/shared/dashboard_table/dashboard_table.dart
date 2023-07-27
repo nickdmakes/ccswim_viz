@@ -7,22 +7,39 @@ import 'package:ccswim_viz/core/swimmer_search/bloc/swimmer_search/swimmer_searc
 import 'cubit/dashboard_table_cubit.dart';
 
 class DashboardTable extends StatelessWidget {
-  const DashboardTable({
+  DashboardTable({
     required this.tableData,
     required this.columnNames,
+    required this.columnKeys,
     this.onRowSelected,
     this.dataRowHeight = 30,
     this.onClearPressed,
     this.headerTitle,
     super.key,
-  });
+  }) {
+    assert(_validateColumnKeys(), "columnKeys must be a subset of tableData keys");
+  }
 
   final List<dynamic> tableData;
   final List<String> columnNames;
+  final List<String> columnKeys;
   final Function(int)? onRowSelected;
   final void Function()? onClearPressed;
   final Text? headerTitle;
   final double dataRowHeight;
+
+  // Function to make sure all strings in columnKeys exist within tableData keys
+  bool _validateColumnKeys() {
+    if (tableData.isEmpty) {
+      return true;
+    }
+    for (String key in columnKeys) {
+      if (!tableData[0].keys.contains(key)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +47,12 @@ class DashboardTable extends StatelessWidget {
       create: (_) => DashboardTableCubit(),
       child: LayoutBuilder(
           builder: (context, constraints) {
+            // reset the state
+            context.read<DashboardTableCubit>().reset();
+
             // Update the tableData in the state
             context.read<DashboardTableCubit>().tableDataChanged(tableData);
-            // Get the height of the table and calculate the number of rowsPerPage
-            // update the rowsPerPage in the state
+            // Update the rowsPerPage in the state
             final double tableHeight = constraints.maxHeight - 170;
             final int rowsPerPage = (tableHeight / dataRowHeight).floor();
             context.read<DashboardTableCubit>().rowsPerPageChanged(rowsPerPage);
@@ -44,8 +63,8 @@ class DashboardTable extends StatelessWidget {
               children: [
                 _PaginatedHeader(headerTitle: headerTitle),
                 tableData.isEmpty
-                    ? _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected)
-                    : Expanded(child: SingleChildScrollView(child: _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected))),
+                    ? _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected, columnKeys: columnKeys)
+                    : Expanded(child: SingleChildScrollView(child: _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected, columnKeys: columnKeys))),
                 tableData.isEmpty ? const Expanded(child: _TableFooter()) : _TableFooter(onClearPressed: onClearPressed),
               ],
             );
@@ -62,12 +81,11 @@ class _PaginatedHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get maxPages from the state
-    final int maxPages = context.select((DashboardTableCubit cubit) => cubit.maxPages);
-
     return BlocBuilder<DashboardTableCubit, DashboardTableState>(
       buildWhen: (previous, current) => previous.page != current.page,
       builder: (context, state) {
+        // Get thee max number of pages
+        final int maxPages = context.read<DashboardTableCubit>().maxPages;
         return Container(
           height: 30,
           decoration: BoxDecoration(
@@ -98,7 +116,7 @@ class _PaginatedHeader extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 icon: const Icon(Icons.keyboard_arrow_left_rounded),
                 splashRadius: 12,
-                color: neutral[4],
+                color: state.page == 0 ? neutral[3] : neutral[4],
               ),
               Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3])),
               IconButton(
@@ -106,7 +124,7 @@ class _PaginatedHeader extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 icon: const Icon(Icons.keyboard_arrow_right_rounded),
                 splashRadius: 12,
-                color: neutral[4],
+                color: state.page == maxPages ? neutral[3] : neutral[4],
               ),
             ],
           ),
@@ -120,20 +138,21 @@ class _SwimmerDataTable extends StatelessWidget {
   const _SwimmerDataTable({
     required this.dataRowHeight,
     required this.columnNames,
+    required this.columnKeys,
     this.onRowSelected,
   });
 
   final double dataRowHeight;
   final List<String> columnNames;
+  final List<String> columnKeys;
   final Function(int)? onRowSelected;
 
   @override
   Widget build(BuildContext context) {
-    // Get the tableData from the state
-    final List<dynamic> pageTableData = context.select((DashboardTableCubit cubit) => cubit.pageTableData);
-
     return BlocBuilder<DashboardTableCubit, DashboardTableState>(
       builder: (context, state) {
+        // Get the data for the current page
+        final List<dynamic> pageTableData = context.read<DashboardTableCubit>().pageTableData;
         return DataTable(
           horizontalMargin: 8,
           headingRowColor: MaterialStateColor.resolveWith((states) => neutral[1]),
@@ -147,7 +166,7 @@ class _SwimmerDataTable extends StatelessWidget {
                 onSelectChanged: (_) {
                   context.read<DashboardTableCubit>().selectedIndexChanged(index + (state.page * state.rowsPerPage));
                   if (onRowSelected != null) {
-                    onRowSelected!(index);
+                    onRowSelected!(index + (state.page * state.rowsPerPage));
                   }
                 },
                 color: MaterialStateColor.resolveWith((states) {
@@ -162,7 +181,7 @@ class _SwimmerDataTable extends StatelessWidget {
                 }),
                 // If the tableData is empty, return an empty list of DataCells, otherwise return the data cells
                 // equal to the number of rowsPerPage at the given page
-                cells: pageTableData.isEmpty ? [] : _getDataCells(pageTableData: pageTableData, index: index),
+                cells: pageTableData.isEmpty ? [] : _getDataCells(pageTableData: pageTableData, index: index, columnKeys: columnKeys),
               );
             },
           ),
@@ -183,8 +202,8 @@ class _SwimmerDataTable extends StatelessWidget {
   }
 
   // Get the data cells from the tableData at the given index
-  List<DataCell> _getDataCells({required List<dynamic> pageTableData, required int index}) {
-    List<DataCell> cells = pageTableData[index].keys
+  List<DataCell> _getDataCells({required List<dynamic> pageTableData, required List<String> columnKeys, required int index}) {
+    List<DataCell> cells = columnKeys
         .map<DataCell>((key) => DataCell(Text(pageTableData[index][key])))
         .toList();
     return cells;

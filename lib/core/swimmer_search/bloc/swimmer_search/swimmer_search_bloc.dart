@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:bloc/bloc.dart';
 
 import 'package:ccswims_repository/ccswims_repository.dart';
 
@@ -20,8 +20,8 @@ class SwimmerSearchBloc extends Bloc<SwimmerSearchEvent, SwimmerSearchState> {
     emit(SwimmerSearchLoading());
     try {
       // TODO: Remove this mock data
-      final swimmers = await _ccswimsRepository.mockSwimmerSearch();
-      // final swimmers = await _ccswimsRepository.swimmerSearch(event.fullnameSearch, event.clubSearch);
+      // final swimmers = await _ccswimsRepository.mockSwimmerSearch();
+      final swimmers = await _ccswimsRepository.swimmerSearch(event.fullnameSearch, event.clubSearch);
       emit(SwimmerSearchSuccessful(fullnameSearch: event.fullnameSearch, clubSearch: event.clubSearch, swimmers: swimmers));
     } catch(e) {
       emit(SwimmerSearchFailed());
