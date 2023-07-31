@@ -52,7 +52,7 @@ class _TimesTable extends StatelessWidget {
         if(state is AllSwimmerTimesFetchNotStarted) {
           return _EmptyTimesTable(columnNames: columnNames, keyNames: keyNames);
         } else if(state is AllSwimmerTimesFetchLoading) {
-          return const _LoadingTimesTable();
+          return _LoadingTimesTable(columnNames: columnNames, keyNames: keyNames);
         } else if(state is AllSwimmerTimesFetchSuccessful) {
           return _FilteredTimesTable(columnNames: columnNames, keyNames: keyNames, times: state.times, swimmerName: state.fullname, clubName: state.club);
         } else {
@@ -76,11 +76,26 @@ class _EmptyTimesTable extends StatelessWidget {
 }
 
 class _LoadingTimesTable extends StatelessWidget {
-  const _LoadingTimesTable();
+  const _LoadingTimesTable({
+    required this.columnNames,
+    required this.keyNames,
+  });
+
+  final List<String> columnNames;
+  final List<String> keyNames;
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator());
+    return DashboardTable(
+      tableData: const [],
+      columnNames: columnNames,
+      columnKeys: keyNames,
+      headerTitle: Text(
+        "Loading times...",
+        style: TextStyle(color: neutral[3]),
+      ),
+      isLoading: true,
+    );
   }
 }
 
