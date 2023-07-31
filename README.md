@@ -1,16 +1,3 @@
-# ccswim_viz
+# ccswim_viz (CCSwimViz)
 
-Visualization tool for College Club Swimming Data
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+CCSwimViz is an application that aims to create data searches and visualizations for College Club Swimming data. This project focuses on developing the frontend component of CCSwimViz, utilizing the powerful Flutter framework to create a dynamic and interactive user interface.
