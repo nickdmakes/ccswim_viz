@@ -131,7 +131,12 @@ class _SwimmerLookupTable extends StatelessWidget {
             columnKeys: const ["fullname", "club"],
           );
         } else if(state is SwimmerSearchLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return DashboardTable(
+            tableData: const [],
+            columnNames: const ["Name", "Club"],
+            columnKeys: const ["fullname", "club"],
+            isLoading: true,
+          );
         } else if(state is SwimmerSearchSuccessful) {
           return DashboardTable(
             tableData: state.swimmers,

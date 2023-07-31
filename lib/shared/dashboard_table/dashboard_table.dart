@@ -1,8 +1,6 @@
-import 'package:ccswim_viz/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:ccswim_viz/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:ccswim_viz/core/swimmer_search/bloc/swimmer_search/swimmer_search_bloc.dart';
 
 import 'cubit/dashboard_table_cubit.dart';
 
@@ -15,6 +13,7 @@ class DashboardTable extends StatelessWidget {
     this.dataRowHeight = 30,
     this.onClearPressed,
     this.headerTitle,
+    this.isLoading = false,
     super.key,
   }) {
     assert(_validateColumnKeys(), "columnKeys must be a subset of tableData keys");
@@ -27,6 +26,7 @@ class DashboardTable extends StatelessWidget {
   final void Function()? onClearPressed;
   final Text? headerTitle;
   final double dataRowHeight;
+  final bool isLoading;
 
   // Function to make sure all strings in columnKeys exist within tableData keys
   bool _validateColumnKeys() {
@@ -57,15 +57,24 @@ class DashboardTable extends StatelessWidget {
             final int rowsPerPage = (tableHeight / dataRowHeight).floor();
             context.read<DashboardTableCubit>().rowsPerPageChanged(rowsPerPage);
 
+            final swimmerTable = _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected, columnKeys: columnKeys);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _PaginatedHeader(headerTitle: headerTitle),
-                tableData.isEmpty
-                    ? _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected, columnKeys: columnKeys)
-                    : Expanded(child: SingleChildScrollView(child: _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected, columnKeys: columnKeys))),
-                tableData.isEmpty ? const Expanded(child: _TableFooter()) : _TableFooter(onClearPressed: onClearPressed),
+                tableData.isEmpty ? swimmerTable : Expanded(child: SingleChildScrollView(child: swimmerTable)),
+                Builder(
+                  builder: (context) {
+                    if(isLoading) {
+                      return const Expanded(child: Center(child: CircularProgressIndicator()));
+                    } else if(tableData.isEmpty) {
+                      return const Expanded(child: _TableFooter());
+                    } else {
+                      return _TableFooter(onClearPressed: onClearPressed);
+                    }
+                  }
+                ),
               ],
             );
           }
