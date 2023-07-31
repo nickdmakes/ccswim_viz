@@ -9,9 +9,10 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "CCSwimViz",
       debugShowCheckedModeBanner: false,
       theme: theme,
-      home: SwimmerSearchPage(),
+      home: const SwimmerSearchPage(),
     );
   }
 }
