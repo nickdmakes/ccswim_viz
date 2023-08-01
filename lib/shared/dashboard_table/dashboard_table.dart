@@ -61,7 +61,7 @@ class DashboardTable extends StatelessWidget {
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 _PaginatedHeader(headerTitle: headerTitle),
                 Expanded(
@@ -71,7 +71,7 @@ class DashboardTable extends StatelessWidget {
                       if(isLoading) {
                         return const Center(child: CircularProgressIndicator());
                       } else {
-                        return SingleChildScrollView(scrollDirection: Axis.vertical, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable)));
+                        return SingleChildScrollView(physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable)));
                       }
                     },
                   ),
@@ -116,6 +116,7 @@ class _PaginatedHeader extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
