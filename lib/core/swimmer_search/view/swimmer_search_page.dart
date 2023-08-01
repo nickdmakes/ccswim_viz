@@ -18,18 +18,21 @@ class SwimmerSearchPage extends StatelessWidget {
         centerTitle: false,
         backgroundColor: Colors.grey[100],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider<SwimmerSearchBloc>(
-              create: (_) => SwimmerSearchBloc(context.read<CCSwimsRepository>()),
-            ),
-            BlocProvider<AllSwimmerTimesBloc>(
-              create: (_) => AllSwimmerTimesBloc(context.read<CCSwimsRepository>()),
-            ),
-          ],
-            child: const SwimmerSearchView(),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<SwimmerSearchBloc>(
+                create: (_) => SwimmerSearchBloc(context.read<CCSwimsRepository>()),
+              ),
+              BlocProvider<AllSwimmerTimesBloc>(
+                create: (_) => AllSwimmerTimesBloc(context.read<CCSwimsRepository>()),
+              ),
+            ],
+              child: const SwimmerSearchView(),
+          ),
         ),
       ),
     );
