@@ -61,15 +61,27 @@ class DashboardTable extends StatelessWidget {
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 _PaginatedHeader(headerTitle: headerTitle),
-                tableData.isEmpty ? swimmerTable : Expanded(child: SingleChildScrollView(child: swimmerTable)),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      double tableWidth = constraints.maxWidth;
+                      if(isLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if(tableData.isEmpty) {
+                        return swimmerTable;
+                      } else {
+                        return SingleChildScrollView(scrollDirection: Axis.vertical, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable)));
+                      }
+                    },
+                  ),
+                ),
                 Builder(
                   builder: (context) {
-                    if(isLoading) {
-                      return const Expanded(child: Center(child: CircularProgressIndicator()));
-                    } else if(tableData.isEmpty) {
-                      return const Expanded(child: _TableFooter());
+                    if(tableData.isEmpty) {
+                      return const _TableFooter();
                     } else {
                       return _TableFooter(onClearPressed: onClearPressed);
                     }

@@ -10,8 +10,12 @@ import 'swimmer_search_view.dart';
 class SwimmerSearchPage extends StatelessWidget {
   const SwimmerSearchPage({super.key});
 
+  static const String name = 'swimmer_search';
+
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
+
     return Scaffold(
       appBar: AppBar(
         title: const _AppBarTitle(),
