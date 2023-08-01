@@ -25,17 +25,18 @@ class AppView extends StatelessWidget {
       initialRoute: 'swimmer_search',
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(builder: (context) {
-          return MaxWidthBox(
-            maxWidth: 2000,
-            background: Container(color: neutral[0], child: Center(child: Text('Cool beanz'))),
-            child: ResponsiveScaledBox(
-              width: ResponsiveValue<double>(context, conditionalValues: [
-                Condition.equals(name: MOBILE, value: 450),
-                Condition.between(start: 450, end: 1100, value: 1100),
-              ]).value,
-              child: buildPage(settings.name ?? ''),
-            ),
-          );
+          // return MaxWidthBox(
+          //   maxWidth: 2000,
+          //   background: Container(color: neutral[0], child: Center(child: Text('Cool beanz'))),
+          //   child: ResponsiveScaledBox(
+          //     width: ResponsiveValue<double>(context, conditionalValues: [
+          //       Condition.equals(name: MOBILE, value: 450),
+          //       Condition.between(start: 450, end: 1100, value: 1100),
+          //     ]).value,
+          //     child: buildPage(settings.name ?? ''),
+          //   ),
+          // );
+          return buildPage(settings.name ?? '');
         });
       },
     );
