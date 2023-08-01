@@ -27,7 +27,7 @@ class AppView extends StatelessWidget {
         return MaterialPageRoute(builder: (context) {
           return MaxWidthBox(
             maxWidth: 2000,
-            background: Container(color: neutral[0]),
+            background: Container(color: neutral[0], child: Center(child: Text('Cool beanz'))),
             child: ResponsiveScaledBox(
               width: ResponsiveValue<double>(context, conditionalValues: [
                 Condition.equals(name: MOBILE, value: 450),
