@@ -7,15 +7,15 @@ class DashboardInputField extends StatefulWidget {
     this.onSubmitted,
     this.onChanged,
     this.placeholder,
-    this.errorText,
     this.keyboardType,
+    this.isInputValid,
     super.key,
   });
 
   final Function(String)? onSubmitted;
   final Function(String)? onChanged;
+  final bool? isInputValid;
   final String? placeholder;
-  final String? errorText;
   final TextInputType? keyboardType;
 
   @override
@@ -36,12 +36,30 @@ class _DashboardInputFieldState extends State<DashboardInputField> {
   Widget build(BuildContext context) {
     const borderRadius = 4.0;
 
+    var focusedBorder = OutlineInputBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
+      borderSide: BorderSide(width: 1.5, color: primary[3])
+    );
+
+    var enabledBorder = OutlineInputBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
+      borderSide: BorderSide(width: 1, color: neutral[3])
+    );
+
+    if(widget.isInputValid != null) {
+      if(widget.isInputValid! == false) {
+        focusedBorder = focusedBorder.copyWith(borderSide: BorderSide(width: 1.5, color: error[4]));
+        enabledBorder = enabledBorder.copyWith(borderSide: BorderSide(width: 1, color: error[3]));
+      }
+    }
+
     return TextField(
       controller: _textController,
       onSubmitted: widget.onSubmitted,
       onChanged: widget.onChanged,
       keyboardType: widget.keyboardType,
       style: TextStyle(color: neutral[4], fontSize: 14.0),
+      maxLines: 1,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(16.0),
         suffixIcon: _textController.text.isEmpty
@@ -56,29 +74,11 @@ class _DashboardInputFieldState extends State<DashboardInputField> {
           icon: const Icon(Icons.clear, size: 14),
           splashRadius: 10,
         ),
-        isCollapsed: true,
+        isDense: true,
         hintText: widget.placeholder,
         hintStyle: TextStyle(color: neutral[2]),
-        helperText: ' ',
-        helperStyle: const TextStyle(fontSize: 0),
-        errorText: widget.errorText,
-        errorStyle: const TextStyle(fontSize: 0),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
-            borderSide: BorderSide(width: 1.5, color: primary[3])
-        ),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
-            borderSide: BorderSide(width: 1.0, color: neutral[2]),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
-          borderSide: BorderSide(width: 1.0, color: error[3]),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(borderRadius)),
-          borderSide: BorderSide(width: 1.5, color: error[4]),
-        ),
+        focusedBorder: focusedBorder,
+        enabledBorder: enabledBorder,
       ),
     );
   }

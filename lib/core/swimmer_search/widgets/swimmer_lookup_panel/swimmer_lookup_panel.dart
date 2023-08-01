@@ -32,6 +32,7 @@ class SwimmerLookupPanel extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(height: 4.0),
           Expanded(child: _SwimmerLookupBody()),
         ],
       ),
@@ -55,7 +56,7 @@ class _SwimmerNameInput extends StatelessWidget {
             context.read<SwimmerLookupPanelCubit>().swimmerSearchSubmitted();
           },
           placeholder: "[Firstname] [Lastname]",
-          errorText: state.swimmerName.invalid ? '' : null,
+          isInputValid: !state.swimmerName.invalid,
           keyboardType: TextInputType.name,
         );
       },
@@ -79,7 +80,7 @@ class _ClubNameInput extends StatelessWidget {
             context.read<SwimmerLookupPanelCubit>().swimmerSearchSubmitted();
           },
           placeholder: "[Club]",
-          errorText: state.clubName.invalid ? '' : null,
+          isInputValid: !state.clubName.invalid,
           keyboardType: TextInputType.name,
         );
       },
@@ -143,7 +144,7 @@ class _SwimmerLookupTable extends StatelessWidget {
             columnNames: const ["Name", "Club"],
             columnKeys: const ["fullname", "club"],
             headerTitle: Text(
-              "Results for (${state.fullnameSearch}) / (${state.clubSearch})", style: TextStyle(color: neutral[3]),
+              "(${state.fullnameSearch}) / (${state.clubSearch})", style: TextStyle(color: neutral[3]),
               overflow: TextOverflow.ellipsis,
             ),
             onRowSelected: (index) => context.read<AllSwimmerTimesBloc>().add(FetchAllSwimmerTimes(fullname: state.swimmers[index]["fullname"], club: state.swimmers[index]["club"])),
