@@ -30,7 +30,7 @@ class AppView extends StatelessWidget {
             background: Container(color: neutral[0]),
             child: ResponsiveScaledBox(
               width: ResponsiveValue<double>(context, conditionalValues: [
-                Condition.equals(name: MOBILE, value: 500),
+                Condition.equals(name: MOBILE, value: 450),
                 Condition.between(start: 450, end: 1100, value: 1100),
               ]).value,
               child: BouncingScrollWrapper.builder(
