@@ -33,9 +33,7 @@ class AppView extends StatelessWidget {
                 Condition.equals(name: MOBILE, value: 450),
                 Condition.between(start: 450, end: 1100, value: 1100),
               ]).value,
-              child: BouncingScrollWrapper.builder(
-                  context, buildPage(settings.name ?? ''),
-                  dragWithMouse: true),
+              child: buildPage(settings.name ?? ''),
             ),
           );
         });

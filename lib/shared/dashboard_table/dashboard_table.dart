@@ -70,8 +70,6 @@ class DashboardTable extends StatelessWidget {
                       double tableWidth = constraints.maxWidth;
                       if(isLoading) {
                         return const Center(child: CircularProgressIndicator());
-                      } else if(tableData.isEmpty) {
-                        return swimmerTable;
                       } else {
                         return SingleChildScrollView(scrollDirection: Axis.vertical, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable)));
                       }

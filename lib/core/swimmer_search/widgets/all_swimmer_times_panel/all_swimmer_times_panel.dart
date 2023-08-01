@@ -134,7 +134,7 @@ class _FilteredTimesTable extends StatelessWidget {
       columnNames: columnNames,
       columnKeys: keyNames,
       headerTitle: Text(
-        "Showing times for $swimmerName from $clubName",
+        "$swimmerName from $clubName",
         style: TextStyle(color: neutral[3]),
       ),
       onClearPressed: () => context.read<AllSwimmerTimesBloc>().add(ResetAllSwimmerTimes()),
