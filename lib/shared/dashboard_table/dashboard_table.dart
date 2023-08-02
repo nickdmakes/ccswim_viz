@@ -159,17 +159,9 @@ class _TableArrowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        padding: EdgeInsets.zero,
-        maximumSize: const Size(40, 40),
-        minimumSize: const Size(20, 20),
-        shape: const CircleBorder(),
-        side: BorderSide(width: 1, color: color ?? neutral[4]),
-      ),
-      child: Icon(icon, size: 10, color: color),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Icon(icon, color: color, size: 30),
     );
   }
 }
