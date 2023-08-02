@@ -121,6 +121,7 @@ class _PaginatedHeader extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
@@ -135,7 +136,7 @@ class _PaginatedHeader extends StatelessWidget {
                     splashRadius: 12,
                     color: state.page == 0 ? neutral[3] : neutral[4],
                   ),
-                  Center(child: Text("${state.page} of $maxPages",textAlign: TextAlign.center, style: TextStyle(color: neutral[3], height: 1.0, fontSize: 14))),
+                  Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3],fontSize: 14, height: 0.8)),
                   IconButton(
                     onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
                     padding: EdgeInsets.zero,
