@@ -110,7 +110,7 @@ class _PaginatedHeader extends StatelessWidget {
             // Get the width of the table. Used to remove title when table is too small
             final double tableWidth = constraints.maxWidth;
             return Container(
-              height: 32,
+              height: 50,
               decoration: BoxDecoration(
                 color: neutral[2],
                 borderRadius: const BorderRadius.only(
