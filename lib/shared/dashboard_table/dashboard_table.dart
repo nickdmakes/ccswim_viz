@@ -169,7 +169,7 @@ class _TableArrowButton extends StatelessWidget {
         shape: const CircleBorder(),
         side: BorderSide(width: 1, color: color ?? neutral[4]),
       ),
-      child: Icon(icon, color: color),
+      child: Icon(icon, size: 10, color: color),
     );
   }
 }
