@@ -121,7 +121,6 @@ class _PaginatedHeader extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 4),
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     tableWidth < 250 ? Container() : (headerTitle ?? Container()),
                     const Spacer(),
@@ -162,11 +161,13 @@ class _TableArrowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: onPressed,
-      style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.zero),
-        minimumSize: MaterialStateProperty.all<Size>(const Size(30, 30)),
-        shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
-        side: MaterialStateProperty.all<BorderSide>(BorderSide.none),
+      style: OutlinedButton.styleFrom(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        padding: EdgeInsets.zero,
+        maximumSize: const Size(40, 40),
+        minimumSize: const Size(20, 20),
+        shape: const CircleBorder(),
+        side: BorderSide(width: 1, color: color ?? neutral[4]),
       ),
       child: Icon(icon, color: color),
     );
