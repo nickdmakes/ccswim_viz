@@ -60,7 +60,7 @@ class DashboardTable extends StatelessWidget {
             final swimmerTable = _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected, columnKeys: columnKeys);
 
             return Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _PaginatedHeader(headerTitle: headerTitle),
@@ -110,7 +110,7 @@ class _PaginatedHeader extends StatelessWidget {
             // Get the width of the table. Used to remove title when table is too small
             final double tableWidth = constraints.maxWidth;
             return Container(
-              height: 50,
+              height: 35,
               decoration: BoxDecoration(
                 color: neutral[2],
                 borderRadius: const BorderRadius.only(
@@ -160,12 +160,14 @@ class _TableArrowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onPressed,
-      padding: const EdgeInsets.all(0),
-      splashRadius: 20,
-      iconSize: 30,
-      icon: Icon(icon, color: color),
+    return SizedBox(
+      child: IconButton(
+        onPressed: onPressed,
+        padding: const EdgeInsets.all(0),
+        splashRadius: 20,
+        iconSize: 30,
+        icon: Icon(icon, color: color),
+      ),
     );
   }
 }
