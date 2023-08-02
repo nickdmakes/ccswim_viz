@@ -70,9 +70,6 @@ class DashboardTable extends StatelessWidget {
                       double tableWidth = constraints.maxWidth;
                       if(isLoading) {
                         return const Center(child: CircularProgressIndicator());
-                      } else if(tableData.isEmpty) {
-                        //return Center(child: Text("No data to display", style: TextStyle(color: neutral[3], fontSize: 14)));
-                        return swimmerTable;
                       } else {
                         return SingleChildScrollView(physics: const ClampingScrollPhysics(), primary: false, scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable));
                       }
@@ -128,22 +125,16 @@ class _PaginatedHeader extends StatelessWidget {
                   children: [
                     tableWidth < 250 ? Container() : (headerTitle ?? Container()),
                     const Spacer(),
-                    IconButton(
+                    _TableArrowButton(
                       onPressed: () => state.page == 0 ? null : context.read<DashboardTableCubit>().pageChanged(state.page - 1),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(maxHeight: 20, minHeight: 20, maxWidth: 30, minWidth: 20),
-                      icon: const Icon(Icons.keyboard_arrow_left_rounded),
                       color: state.page == 0 ? neutral[3] : neutral[4],
+                      icon: Icons.keyboard_arrow_left_rounded,
                     ),
                     Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3],fontSize: 14, height: 0)),
-                    Center(
-                      child: IconButton(
-                        onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(maxHeight: 20, minHeight: 20, maxWidth: 30, minWidth: 20),
-                        icon: const Icon(Icons.keyboard_arrow_right_rounded),
-                        color: state.page == maxPages ? neutral[3] : neutral[4],
-                      ),
+                    _TableArrowButton(
+                      onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
+                      color: state.page == maxPages ? neutral[3] : neutral[4],
+                      icon: Icons.keyboard_arrow_right_rounded,
                     ),
                   ],
                 ),
@@ -158,21 +149,29 @@ class _PaginatedHeader extends StatelessWidget {
 
 class _TableArrowButton extends StatelessWidget {
   const _TableArrowButton({
-    this.child,
+    this.icon,
     this.onPressed,
     this.color,
   });
 
-  final Widget? child;
-  final Function(void)? onPressed;
+  final IconData? icon;
+  final Function()? onPressed;
   final Color? color;
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return OutlinedButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.zero),
+        minimumSize: MaterialStateProperty.all<Size>(const Size(20, 20)),
+        shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
+        side: MaterialStateProperty.all<BorderSide>(BorderSide.none),
+      ),
+      child: Icon(icon, color: color),
+    );
   }
 }
-
 
 class _SwimmerDataTable extends StatelessWidget {
   const _SwimmerDataTable({
