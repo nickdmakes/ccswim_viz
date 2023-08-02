@@ -53,7 +53,7 @@ class DashboardTable extends StatelessWidget {
             // Update the tableData in the state
             context.read<DashboardTableCubit>().tableDataChanged(tableData);
             // Update the rowsPerPage in the state
-            final double tableHeight = constraints.maxHeight - 170;
+            final double tableHeight = constraints.maxHeight - 100;
             final int rowsPerPage = (tableHeight / dataRowHeight).floor();
             context.read<DashboardTableCubit>().rowsPerPageChanged(rowsPerPage);
 
@@ -69,8 +69,10 @@ class DashboardTable extends StatelessWidget {
                       double tableWidth = constraints.maxWidth;
                       if(isLoading) {
                         return const Center(child: CircularProgressIndicator());
+                      } else if(tableData.isEmpty) {
+                        return Center(child: Text("No data to display", style: TextStyle(color: neutral[3], fontSize: 14)));
                       } else {
-                        return SingleChildScrollView(physics: const NeverScrollableScrollPhysics(), scrollDirection: Axis.vertical, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable)));
+                        return SingleChildScrollView(primary: false, physics: const ClampingScrollPhysics(), scrollDirection: Axis.vertical, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable)));
                       }
                     },
                   ),
