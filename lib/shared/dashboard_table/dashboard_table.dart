@@ -10,7 +10,7 @@ class DashboardTable extends StatelessWidget {
     required this.columnNames,
     required this.columnKeys,
     this.onRowSelected,
-    this.dataRowHeight = 30,
+    this.dataRowHeight = 40,
     this.onClearPressed,
     this.headerTitle,
     this.isLoading = false,
@@ -53,7 +53,7 @@ class DashboardTable extends StatelessWidget {
             // Update the tableData in the state
             context.read<DashboardTableCubit>().tableDataChanged(tableData);
             // Update the rowsPerPage in the state
-            final double tableHeight = constraints.maxHeight - 100;
+            final double tableHeight = constraints.maxHeight - 80;
             final int rowsPerPage = (tableHeight / dataRowHeight).floor();
             context.read<DashboardTableCubit>().rowsPerPageChanged(rowsPerPage);
 
@@ -72,7 +72,7 @@ class DashboardTable extends StatelessWidget {
                       } else if(tableData.isEmpty) {
                         return Center(child: Text("No data to display", style: TextStyle(color: neutral[3], fontSize: 14)));
                       } else {
-                        return SingleChildScrollView(primary: false, physics: const ClampingScrollPhysics(), scrollDirection: Axis.vertical, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable)));
+                        return SingleChildScrollView(physics: const ClampingScrollPhysics(), primary: false, scrollDirection: Axis.horizontal, child: ConstrainedBox(constraints: BoxConstraints(minWidth: tableWidth), child: swimmerTable));
                       }
                     },
                   ),
@@ -106,41 +106,47 @@ class _PaginatedHeader extends StatelessWidget {
       builder: (context, state) {
         // Get thee max number of pages
         final int maxPages = context.read<DashboardTableCubit>().maxPages;
-        return Container(
-          height: 30,
-          decoration: BoxDecoration(
-            color: neutral[2],
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(4),
-              topRight: Radius.circular(4),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: headerTitle ?? Container(),
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            // Get the width of the table. Used to remove title when table is too small
+            final double tableWidth = constraints.maxWidth;
+            return Container(
+              height: 30,
+              decoration: BoxDecoration(
+                color: neutral[2],
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(4),
+                  topRight: Radius.circular(4),
+                ),
               ),
-              const Spacer(),
-              IconButton(
-                onPressed: () => state.page == 0 ? null : context.read<DashboardTableCubit>().pageChanged(state.page - 1),
-                padding: EdgeInsets.zero,
-                icon: const Icon(Icons.keyboard_arrow_left_rounded),
-                splashRadius: 12,
-                color: state.page == 0 ? neutral[3] : neutral[4],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: tableWidth < 250 ? Container() : (headerTitle ?? Container()),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () => state.page == 0 ? null : context.read<DashboardTableCubit>().pageChanged(state.page - 1),
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.keyboard_arrow_left_rounded),
+                    splashRadius: 12,
+                    color: state.page == 0 ? neutral[3] : neutral[4],
+                  ),
+                  Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3])),
+                  IconButton(
+                    onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.keyboard_arrow_right_rounded),
+                    splashRadius: 12,
+                    color: state.page == maxPages ? neutral[3] : neutral[4],
+                  ),
+                ],
               ),
-              Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3])),
-              IconButton(
-                onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
-                padding: EdgeInsets.zero,
-                icon: const Icon(Icons.keyboard_arrow_right_rounded),
-                splashRadius: 12,
-                color: state.page == maxPages ? neutral[3] : neutral[4],
-              ),
-            ],
-          ),
+            );
+          }
         );
       }
     );
@@ -168,8 +174,12 @@ class _SwimmerDataTable extends StatelessWidget {
         final List<dynamic> pageTableData = context.read<DashboardTableCubit>().pageTableData;
         return DataTable(
           horizontalMargin: 8,
+          dividerThickness: 0.5,
+          columnSpacing: 40,
           headingRowColor: MaterialStateColor.resolveWith((states) => neutral[1]),
-          headingRowHeight: dataRowHeight,
+          headingRowHeight: 30,
+          dataRowMaxHeight: dataRowHeight,
+          dataRowMinHeight: dataRowHeight,
           showCheckboxColumn: false,
           columns: _getDataColumns(columnNames: columnNames),
           rows: List<DataRow>.generate(
@@ -209,7 +219,7 @@ class _SwimmerDataTable extends StatelessWidget {
         .map<DataColumn>((key) => DataColumn(
         label: Text(
           key,
-          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14, color: neutral[4]),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: neutral[4]),
         ))).toList();
     return columns;
   }
@@ -217,7 +227,14 @@ class _SwimmerDataTable extends StatelessWidget {
   // Get the data cells from the tableData at the given index
   List<DataCell> _getDataCells({required List<dynamic> pageTableData, required List<String> columnKeys, required int index}) {
     List<DataCell> cells = columnKeys
-        .map<DataCell>((key) => DataCell(Text(pageTableData[index][key])))
+        .map<DataCell>((key) => DataCell(
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              pageTableData[index][key],
+              style: const TextStyle(fontSize: 13, height: 1.0),
+            ),
+          )))
         .toList();
     return cells;
   }
