@@ -110,7 +110,7 @@ class _PaginatedHeader extends StatelessWidget {
             // Get the width of the table. Used to remove title when table is too small
             final double tableWidth = constraints.maxWidth;
             return Container(
-              height: 30,
+              height: 40,
               decoration: BoxDecoration(
                 color: neutral[2],
                 borderRadius: const BorderRadius.only(
@@ -119,7 +119,7 @@ class _PaginatedHeader extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(left: 8),
+                padding: const EdgeInsets.only(left: 8, right: 4),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -164,7 +164,7 @@ class _TableArrowButton extends StatelessWidget {
       onPressed: onPressed,
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.zero),
-        minimumSize: MaterialStateProperty.all<Size>(const Size(20, 20)),
+        minimumSize: MaterialStateProperty.all<Size>(const Size(30, 30)),
         shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
         side: MaterialStateProperty.all<BorderSide>(BorderSide.none),
       ),
