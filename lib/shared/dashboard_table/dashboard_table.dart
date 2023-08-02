@@ -110,7 +110,7 @@ class _PaginatedHeader extends StatelessWidget {
             // Get the width of the table. Used to remove title when table is too small
             final double tableWidth = constraints.maxWidth;
             return Container(
-              height: 40,
+              height: 32,
               decoration: BoxDecoration(
                 color: neutral[2],
                 borderRadius: const BorderRadius.only(
@@ -121,6 +121,7 @@ class _PaginatedHeader extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 4),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     tableWidth < 250 ? Container() : (headerTitle ?? Container()),
                     const Spacer(),
@@ -129,7 +130,7 @@ class _PaginatedHeader extends StatelessWidget {
                       color: state.page == 0 ? neutral[3] : neutral[4],
                       icon: Icons.keyboard_arrow_left_rounded,
                     ),
-                    Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3],fontSize: 14, height: 0)),
+                    SizedBox(width: 60, child: Center(child: Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3],fontSize: 13, height: 0)))),
                     _TableArrowButton(
                       onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
                       color: state.page == maxPages ? neutral[3] : neutral[4],
