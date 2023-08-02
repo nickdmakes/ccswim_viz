@@ -121,35 +121,32 @@ class _PaginatedHeader extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 8),
-                child: Container(
-                  color: Colors.red,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      tableWidth < 250 ? Container() : (headerTitle ?? Container()),
-                      const Spacer(),
-                      Container(
-                        color: Colors.green,
-                        child: IconButton(
-                          onPressed: () => state.page == 0 ? null : context.read<DashboardTableCubit>().pageChanged(state.page - 1),
-                          padding: EdgeInsets.zero,
-                          icon: const Icon(Icons.keyboard_arrow_left_rounded),
-                          splashRadius: 12,
-                          color: state.page == 0 ? neutral[3] : neutral[4],
-                        ),
-                      ),
-                      Container(color: Colors.blue, child: Center(child: Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3],fontSize: 14, height: 0.5)))),
-                      IconButton(
-                        onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
-                        padding: EdgeInsets.zero,
-                        icon: const Icon(Icons.keyboard_arrow_right_rounded),
-                        splashRadius: 12,
-                        color: state.page == maxPages ? neutral[3] : neutral[4],
-                      ),
-                    ],
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    tableWidth < 250 ? Container() : (headerTitle ?? Container()),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () => state.page == 0 ? null : context.read<DashboardTableCubit>().pageChanged(state.page - 1),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(maxHeight: 30, minHeight: 20, maxWidth: 30, minWidth: 20),
+                      icon: const Icon(Icons.keyboard_arrow_left_rounded),
+                      splashRadius: 12,
+                      color: state.page == 0 ? neutral[3] : neutral[4],
+                    ),
+                    Center(child: Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3],fontSize: 14, height: 0.5))),
+                    IconButton(
+                      onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
+                      padding: EdgeInsets.zero,
+                      alignment: Alignment.center,
+                      constraints: const BoxConstraints(maxHeight: 30, minHeight: 20, maxWidth: 30, minWidth: 20),
+                      icon: const Icon(Icons.keyboard_arrow_right_rounded),
+                      splashRadius: 12,
+                      color: state.page == maxPages ? neutral[3] : neutral[4],
+                    ),
+                  ],
                 ),
               ),
             );
