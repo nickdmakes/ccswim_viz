@@ -125,17 +125,28 @@ class _PaginatedHeader extends StatelessWidget {
                   children: [
                     tableWidth < 250 ? Container() : (headerTitle ?? Container()),
                     const Spacer(),
-                    _TableArrowButton(
-                      onPressed: () => state.page == 0 ? null : context.read<DashboardTableCubit>().pageChanged(state.page - 1),
-                      color: state.page == 0 ? neutral[3] : neutral[4],
-                      icon: Icons.keyboard_arrow_left_rounded,
-                    ),
-                    SizedBox(width: 60, child: Center(child: Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3],fontSize: 13, height: 0)))),
-                    _TableArrowButton(
-                      onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
-                      color: state.page == maxPages ? neutral[3] : neutral[4],
-                      icon: Icons.keyboard_arrow_right_rounded,
-                    ),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(minHeight: 30),
+                      child: Container(
+                        color: Colors.amber,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            _TableArrowButton(
+                              onPressed: () => state.page == 0 ? null : context.read<DashboardTableCubit>().pageChanged(state.page - 1),
+                              color: state.page == 0 ? neutral[3] : neutral[4],
+                              icon: Icons.keyboard_arrow_left_rounded,
+                            ),
+                            SizedBox(width: 60, child: Center(child: Text("${state.page} of $maxPages", style: TextStyle(color: neutral[3],fontSize: 13, height: 0)))),
+                            _TableArrowButton(
+                              onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
+                              color: state.page == maxPages ? neutral[3] : neutral[4],
+                              icon: Icons.keyboard_arrow_right_rounded,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -160,12 +171,9 @@ class _TableArrowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Icon(icon, color: color, size: 18),
-      ),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(color: Colors.blue, child: Icon(icon, color: color, size: 30)),
     );
   }
 }
