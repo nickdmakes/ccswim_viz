@@ -162,11 +162,9 @@ class _TableArrowButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.red,
-      child: Expanded(
-        child: GestureDetector(
-          onTap: onPressed,
-          child: Icon(icon, color: color, size: 18),
-        ),
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Icon(icon, color: color, size: 18),
       ),
     );
   }
