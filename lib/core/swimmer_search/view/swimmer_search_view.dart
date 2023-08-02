@@ -23,18 +23,16 @@ class _MobileSwimmerSearchDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          DashboardCard(
-            child: SwimmerLookupPanel(),
-          ),
-          DashboardCard(
-            child: AllSwimmerTimesPanel(),
-          ),
-        ],
-      ),
+    return const Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DashboardCard(
+          child: SwimmerLookupPanel(),
+        ),
+        DashboardCard(
+          child: AllSwimmerTimesPanel(),
+        ),
+      ],
     );
   }
 }

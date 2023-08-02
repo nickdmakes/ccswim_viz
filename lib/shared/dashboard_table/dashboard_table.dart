@@ -60,7 +60,6 @@ class DashboardTable extends StatelessWidget {
             final swimmerTable = _SwimmerDataTable(dataRowHeight: dataRowHeight, columnNames: columnNames, onRowSelected: onRowSelected, columnKeys: columnKeys);
 
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
                 _PaginatedHeader(headerTitle: headerTitle),
