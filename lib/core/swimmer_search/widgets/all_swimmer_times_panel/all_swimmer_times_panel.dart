@@ -135,7 +135,9 @@ class _FilteredTimesTable extends StatelessWidget {
       columnKeys: keyNames,
       headerTitle: Text(
         "$swimmerName from $clubName",
-        style: TextStyle(color: neutral[3]),
+        style: TextStyle(color: neutral[3],
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       onClearPressed: () => context.read<AllSwimmerTimesBloc>().add(ResetAllSwimmerTimes()),
     );
