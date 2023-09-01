@@ -1,40 +1,35 @@
 import 'package:ccswim_viz/shared/dashboard_table/dashboard_table.dart';
-import 'package:ccswims_repository/ccswims_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:ccswim_viz/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'util/times_data_manager.dart';
+import 'cubit/time_filters_cubit.dart';
+import 'widgets/all_times_filters.dart';
 import 'package:ccswim_viz/core/swimmer_search/bloc/all_swimmer_times/all_swimmer_times_bloc.dart';
 
-class AllSwimmerTimesPanel extends StatelessWidget {
+class AllSwimmerTimesPanel extends StatefulWidget {
   const AllSwimmerTimesPanel({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        //_TimesFilters(),
-        Expanded(
-          child: _TimesTable(),
-        ),
-      ],
-    );
-  }
+  State<AllSwimmerTimesPanel> createState() => _AllSwimmerTimesPanelState();
 }
 
-class _TimesFilters extends StatelessWidget {
-  const _TimesFilters();
-
+class _AllSwimmerTimesPanelState extends State<AllSwimmerTimesPanel> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(height: 40, width: 100, color: neutral[3], child: const Center(child: Text("Filter"))),
-        Container(height: 40, width: 100, color: neutral[3], child: const Center(child: Text("Filter"))),
-        Container(height: 40, width: 100, color: neutral[3], child: const Center(child: Text("Filter"))),
-      ],
+    return BlocProvider(
+      create: (_) => TimeFiltersCubit(),
+      child: const Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AllTimesFilters(),
+          SizedBox(height: 4.0),
+          Expanded(
+            child: _TimesTable(),
+          ),
+        ],
+      ),
     );
   }
 }
