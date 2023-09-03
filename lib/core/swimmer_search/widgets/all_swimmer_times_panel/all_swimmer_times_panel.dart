@@ -87,7 +87,7 @@ class _LoadingTimesTable extends StatelessWidget {
       columnKeys: keyNames,
       headerTitle: Text(
         "Loading times...",
-        style: TextStyle(color: neutral[3]),
+        style: TextStyle(color: neutral[1]),
       ),
       isLoading: true,
     );
@@ -130,7 +130,7 @@ class _FilteredTimesTable extends StatelessWidget {
       columnKeys: keyNames,
       headerTitle: Text(
         "$swimmerName from $clubName",
-        style: TextStyle(color: neutral[3],
+        style: TextStyle(color: neutral[1],
           overflow: TextOverflow.ellipsis,
         ),
       ),
