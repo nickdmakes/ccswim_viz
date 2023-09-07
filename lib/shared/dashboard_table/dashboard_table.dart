@@ -200,7 +200,8 @@ class _SwimmerDataTable extends StatelessWidget {
       builder: (context, state) {
         // Get the data for the current page
         final List<dynamic> pageTableData = context.read<DashboardTableCubit>().pageTableData;
-        return DataTable(
+
+        return pageTableData.isEmpty ? Center(child: Text("No results found", style: TextStyle(color: neutral[2]))) : DataTable(
           horizontalMargin: 8,
           dividerThickness: 0.5,
           columnSpacing: 40,

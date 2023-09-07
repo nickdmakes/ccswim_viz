@@ -133,6 +133,12 @@ class _FilteredTimesTable extends StatelessWidget {
           final endYear = seasons[1].trim();
           timesManager.filterBySeason(startYear, endYear);
         }
+        if(state.stroke != "All") {
+          timesManager.filterByStroke(state.stroke);
+        }
+        if(state.distance != "All") {
+          timesManager.filterByDistance(state.distance);
+        }
 
         return DashboardTable(
           tableData: timesManager.getTimes(),

@@ -83,8 +83,6 @@ class TimesDataManager {
       final int timeYear = int.parse(timeDate.year.toString().substring(2));
       final int timeMonth = timeDate.month;
 
-      print("timeYear: $timeYear timeMonth: $timeMonth");
-
       // If its during the start year, add it to the filteredTimes list if it is after August 1st
       // If its during the end year, add it to the filteredTimes list if it is before August 1st
       if (timeYear == int.parse(startYear)) {
@@ -121,8 +119,51 @@ class TimesDataManager {
     }
   }
 
+  // Method which filters the times by stroke
+  void filterByStroke(String stroke) {
+    // Create a new list of times which will be filtered
+    final List<Map<String, dynamic>> filteredTimes = [];
+
+    // Loop through each time
+    for (int i = 0; i < times.length; i++) {
+      // Get the stroke of the current time
+      final String timeStroke = times[i]["stroke"];
+
+      // If the current time is the correct stroke, add it to the filteredTimes list
+      if (timeStroke == stroke) {
+        filteredTimes.add(times[i]);
+      }
+    }
+
+    // Set the times list to the filteredTimes list
+    times.clear();
+    times.addAll(filteredTimes);
+  }
+
+  // Method which filters the times by distance
+  void filterByDistance(String distance) {
+    // Create a new list of times which will be filtered
+    final List<Map<String, dynamic>> filteredTimes = [];
+
+    // Loop through each time
+    for (int i = 0; i < times.length; i++) {
+      // Get the distance of the current time
+      final String timeDistance = times[i]["distance"];
+
+      // If the current time is the correct distance, add it to the filteredTimes list
+      if (timeDistance == distance) {
+        filteredTimes.add(times[i]);
+      }
+    }
+
+    // Set the times list to the filteredTimes list
+    times.clear();
+    times.addAll(filteredTimes);
+  }
+
   // Method which returns a List<dynamic> property
   List<Map<String, dynamic>> getTimes() {
     return times;
   }
 }
+

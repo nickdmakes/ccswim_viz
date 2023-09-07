@@ -136,6 +136,7 @@ class _SwimmerLookupTable extends StatelessWidget {
             tableData: const [],
             columnNames: const ["Name", "Club"],
             columnKeys: const ["fullname", "club"],
+            headerTitle: Text("Searching...", style: TextStyle(color: neutral[1])),
             isLoading: true,
           );
         } else if(state is SwimmerSearchSuccessful) {

@@ -25,7 +25,7 @@ class AllTimesFilters extends StatelessWidget {
 }
 
 class _BestTimesOnlyButton extends StatelessWidget {
-  const _BestTimesOnlyButton({super.key});
+  const _BestTimesOnlyButton();
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class _SeasonDropdownSelect extends StatelessWidget {
 }
 
 class _StrokeDropdownSelect extends StatelessWidget {
-  const _StrokeDropdownSelect({super.key});
+  const _StrokeDropdownSelect();
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class _StrokeDropdownSelect extends StatelessWidget {
 }
 
 class _DistanceDropdownSelect extends StatelessWidget {
-  const _DistanceDropdownSelect({super.key});
+  const _DistanceDropdownSelect();
 
   @override
   Widget build(BuildContext context) {
