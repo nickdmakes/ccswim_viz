@@ -44,7 +44,7 @@ class _BestTimesOnlyButton extends StatelessWidget {
               foregroundColor: state.bestTimes ? neutral[0] : neutral[4],
               backgroundColor: state.bestTimes ? primary[4] : neutral[0],
             ),
-            child: const Text("Best Times", style: TextStyle(fontSize: 12.0)),
+            child: const Text("Bests", style: TextStyle(fontSize: 10.0)),
           ),
         );
       }
@@ -184,7 +184,7 @@ class _FilterDropdownSelect extends StatelessWidget {
               icon: Icon(Icons.arrow_drop_down_rounded, color: neutral[4]),
               iconSize: 24,
               elevation: 16,
-              style: TextStyle(color: neutral[4], fontSize: 12.0),
+              style: TextStyle(color: neutral[4], fontSize: 10.0),
               onChanged: onChanged,
               items: options!.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(

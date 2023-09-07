@@ -10,7 +10,7 @@ class SwimmerSearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(ResponsiveBreakpoints.of(context).isMobile) {
+    if(ResponsiveBreakpoints.of(context).smallerOrEqualTo(TABLET)) {
       return const _MobileSwimmerSearchDashboard();
     } else {
       return const _DesktopSwimmerSearchDashboard();
