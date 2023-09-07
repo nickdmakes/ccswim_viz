@@ -1,40 +1,35 @@
 import 'package:ccswim_viz/shared/dashboard_table/dashboard_table.dart';
-import 'package:ccswims_repository/ccswims_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:ccswim_viz/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'util/times_data_manager.dart';
+import 'cubit/time_filters_cubit.dart';
+import 'widgets/all_times_filters.dart';
 import 'package:ccswim_viz/core/swimmer_search/bloc/all_swimmer_times/all_swimmer_times_bloc.dart';
 
-class AllSwimmerTimesPanel extends StatelessWidget {
+class AllSwimmerTimesPanel extends StatefulWidget {
   const AllSwimmerTimesPanel({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        //_TimesFilters(),
-        Expanded(
-          child: _TimesTable(),
-        ),
-      ],
-    );
-  }
+  State<AllSwimmerTimesPanel> createState() => _AllSwimmerTimesPanelState();
 }
 
-class _TimesFilters extends StatelessWidget {
-  const _TimesFilters();
-
+class _AllSwimmerTimesPanelState extends State<AllSwimmerTimesPanel> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(height: 40, width: 100, color: neutral[3], child: const Center(child: Text("Filter"))),
-        Container(height: 40, width: 100, color: neutral[3], child: const Center(child: Text("Filter"))),
-        Container(height: 40, width: 100, color: neutral[3], child: const Center(child: Text("Filter"))),
-      ],
+    return BlocProvider(
+      create: (_) => TimeFiltersCubit(),
+      child: const Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AllTimesFilters(),
+          SizedBox(height: 4.0),
+          Expanded(
+            child: _TimesTable(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -92,7 +87,7 @@ class _LoadingTimesTable extends StatelessWidget {
       columnKeys: keyNames,
       headerTitle: Text(
         "Loading times...",
-        style: TextStyle(color: neutral[3]),
+        style: TextStyle(color: neutral[1]),
       ),
       isLoading: true,
     );
@@ -125,21 +120,39 @@ class _FilteredTimesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<TimeFiltersCubit, TimeFiltersState>(
+      builder: (context, state) {
+        // pass a copy of times into the data manager
+        final timesManager = TimesDataManager(times: List<Map<String, dynamic>>.from(times));
+        if(state.bestTimes) {
+          timesManager.filterByBestTimes();
+        }
+        if(state.season != "All") {
+          final seasons = state.season.split("-");
+          final startYear = seasons[0].trim();
+          final endYear = seasons[1].trim();
+          timesManager.filterBySeason(startYear, endYear);
+        }
+        if(state.stroke != "All") {
+          timesManager.filterByStroke(state.stroke);
+        }
+        if(state.distance != "All") {
+          timesManager.filterByDistance(state.distance);
+        }
 
-    final timesManager = TimesDataManager(times: times.cast<Map<String, dynamic>>());
-    timesManager.combineDistanceAndStroke();
-
-    return DashboardTable(
-      tableData: timesManager.getTimes(),
-      columnNames: columnNames,
-      columnKeys: keyNames,
-      headerTitle: Text(
-        "$swimmerName from $clubName",
-        style: TextStyle(color: neutral[3],
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      onClearPressed: () => context.read<AllSwimmerTimesBloc>().add(ResetAllSwimmerTimes()),
+        return DashboardTable(
+          tableData: timesManager.getTimes(),
+          columnNames: columnNames,
+          columnKeys: keyNames,
+          headerTitle: Text(
+            "$swimmerName from $clubName",
+            style: TextStyle(color: neutral[1],
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          onClearPressed: () => context.read<AllSwimmerTimesBloc>().add(ResetAllSwimmerTimes()),
+        );
+      }
     );
   }
 }

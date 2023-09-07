@@ -42,7 +42,7 @@ class SwimmerSearchPage extends StatelessWidget {
 }
 
 class _AppBarTitle extends StatelessWidget {
-  const _AppBarTitle({super.key});
+  const _AppBarTitle();
 
   @override
   Widget build(BuildContext context) {

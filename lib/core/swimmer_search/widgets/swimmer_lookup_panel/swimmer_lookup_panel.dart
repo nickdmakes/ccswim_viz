@@ -136,6 +136,7 @@ class _SwimmerLookupTable extends StatelessWidget {
             tableData: const [],
             columnNames: const ["Name", "Club"],
             columnKeys: const ["fullname", "club"],
+            headerTitle: Text("Searching...", style: TextStyle(color: neutral[1])),
             isLoading: true,
           );
         } else if(state is SwimmerSearchSuccessful) {
@@ -144,7 +145,7 @@ class _SwimmerLookupTable extends StatelessWidget {
             columnNames: const ["Name", "Club"],
             columnKeys: const ["fullname", "club"],
             headerTitle: Text(
-              "(${state.fullnameSearch}) / (${state.clubSearch})", style: TextStyle(color: neutral[3]),
+              "(${state.fullnameSearch}) / (${state.clubSearch})", style: TextStyle(color: neutral[1]),
               overflow: TextOverflow.ellipsis,
             ),
             onRowSelected: (index) => context.read<AllSwimmerTimesBloc>().add(FetchAllSwimmerTimes(fullname: state.swimmers[index]["fullname"], club: state.swimmers[index]["club"])),

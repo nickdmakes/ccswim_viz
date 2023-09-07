@@ -112,7 +112,7 @@ class _PaginatedHeader extends StatelessWidget {
             return Container(
               height: 35,
               decoration: BoxDecoration(
-                color: neutral[2],
+                color: primary[4],
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(4),
                   topRight: Radius.circular(4),
@@ -132,13 +132,13 @@ class _PaginatedHeader extends StatelessWidget {
                         children: [
                           _TableArrowButton(
                             onPressed: () => state.page == 0 ? null : context.read<DashboardTableCubit>().pageChanged(state.page - 1),
-                            color: state.page == 0 ? neutral[3] : neutral[4],
+                            color: state.page == 0 ? neutral[3] : neutral[1],
                             icon: Icons.keyboard_arrow_left_rounded,
                           ),
-                          SizedBox(width: 50, child: Text("${state.page} of $maxPages",textAlign: TextAlign.center, style: TextStyle(color: neutral[3],fontSize: 13, height: 0))),
+                          SizedBox(width: 50, child: Text("${state.page} of $maxPages",textAlign: TextAlign.center, style: TextStyle(color: neutral[0],fontSize: 13, height: 0))),
                           _TableArrowButton(
                             onPressed: () => state.page == maxPages ? null : context.read<DashboardTableCubit>().pageChanged(state.page + 1),
-                            color: state.page == maxPages ? neutral[3] : neutral[4],
+                            color: state.page == maxPages ? neutral[3] : neutral[1],
                             icon: Icons.keyboard_arrow_right_rounded,
                           ),
                         ],
@@ -200,7 +200,8 @@ class _SwimmerDataTable extends StatelessWidget {
       builder: (context, state) {
         // Get the data for the current page
         final List<dynamic> pageTableData = context.read<DashboardTableCubit>().pageTableData;
-        return DataTable(
+
+        return pageTableData.isEmpty ? Center(child: Text("No results found", style: TextStyle(color: neutral[2]))) : DataTable(
           horizontalMargin: 8,
           dividerThickness: 0.5,
           columnSpacing: 40,
