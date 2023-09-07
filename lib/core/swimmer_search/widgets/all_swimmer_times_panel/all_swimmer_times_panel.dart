@@ -120,21 +120,33 @@ class _FilteredTimesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<TimeFiltersCubit, TimeFiltersState>(
+      builder: (context, state) {
+        // pass a copy of times into the data manager
+        final timesManager = TimesDataManager(times: List<Map<String, dynamic>>.from(times));
+        if(state.bestTimes) {
+          timesManager.filterByBestTimes();
+        }
+        if(state.season != "All") {
+          final seasons = state.season.split("-");
+          final startYear = seasons[0].trim();
+          final endYear = seasons[1].trim();
+          timesManager.filterBySeason(startYear, endYear);
+        }
 
-    final timesManager = TimesDataManager(times: times.cast<Map<String, dynamic>>());
-    timesManager.combineDistanceAndStroke();
-
-    return DashboardTable(
-      tableData: timesManager.getTimes(),
-      columnNames: columnNames,
-      columnKeys: keyNames,
-      headerTitle: Text(
-        "$swimmerName from $clubName",
-        style: TextStyle(color: neutral[1],
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      onClearPressed: () => context.read<AllSwimmerTimesBloc>().add(ResetAllSwimmerTimes()),
+        return DashboardTable(
+          tableData: timesManager.getTimes(),
+          columnNames: columnNames,
+          columnKeys: keyNames,
+          headerTitle: Text(
+            "$swimmerName from $clubName",
+            style: TextStyle(color: neutral[1],
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          onClearPressed: () => context.read<AllSwimmerTimesBloc>().add(ResetAllSwimmerTimes()),
+        );
+      }
     );
   }
 }
