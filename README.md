@@ -82,7 +82,7 @@ The most supported IDE for Flutter development is Android Studio. Navigate to th
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+See `LICENSE` for more information.
 
 
 <!-- CONTACT -->
