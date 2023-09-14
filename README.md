@@ -5,9 +5,9 @@
   <p align="center">
     Individual time search and visualization tool for College Club Swimming Athletes
     <br />
+    <h2><a href="https://ccswimviz.com">www.ccswimviz.com</a></h2>
   </p>
 </div>
-
 
 
 <!-- TABLE OF CONTENTS -->
@@ -53,7 +53,7 @@ This public codebase works alongside other private Github repositories to make t
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Getting Started - Development
 
 ### Prerequisites
 
@@ -90,6 +90,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Nick Matthews - nickd.mf7@gmail.com  
 
-Project Link: [https://github.com/nickmatthews713/blackjai-server](https://github.com/nickmatthews713/blackjai-server)
+Project Link: [https://github.com/nickmatthews713/blackjai-server](https://github.com/nickmatthews713/ccswim_viz)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
