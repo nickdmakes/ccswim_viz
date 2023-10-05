@@ -32,6 +32,9 @@ class SwimmerSearchPage extends StatelessWidget {
               BlocProvider<AllSwimmerTimesBloc>(
                 create: (_) => AllSwimmerTimesBloc(context.read<CCSwimsRepository>()),
               ),
+              BlocProvider<SelectedTimeBloc>(
+                create: (_) => SelectedTimeBloc(),
+              )
             ],
               child: const SwimmerSearchView(),
           ),
