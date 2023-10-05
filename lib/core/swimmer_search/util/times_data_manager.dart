@@ -38,10 +38,10 @@ class TimesDataManager {
 
       // If the distance_stroke is not in the bestTimes map, add it
       if (!bestTimes.containsKey(distanceStroke)) {
-        bestTimes[distanceStroke] = _timeStrToDuration(times[i]["time"]);
+        bestTimes[distanceStroke] = timeStrToDuration(times[i]["time"]);
       } else {
         // If the distance_stroke is in the bestTimes map, compare the current time to the best time
-        final Duration currentTime = _timeStrToDuration(times[i]["time"]);
+        final Duration currentTime = timeStrToDuration(times[i]["time"]);
         if (currentTime < bestTimes[distanceStroke]!) {
           bestTimes[distanceStroke] = currentTime;
         }
@@ -57,7 +57,7 @@ class TimesDataManager {
       final String distanceStroke = times[i]["distance_stroke"];
 
       // If the current time is the best time for the distance_stroke, add it to the filteredTimes list
-      if (bestTimes[distanceStroke] == _timeStrToDuration(times[i]["time"])) {
+      if (bestTimes[distanceStroke] == timeStrToDuration(times[i]["time"])) {
         filteredTimes.add(times[i]);
       }
     }
@@ -103,7 +103,7 @@ class TimesDataManager {
 
   // convert time string into a Duration
   // Some times are in the format "0:00.00" and some are in the format "00.00"
-  Duration _timeStrToDuration(String time) {
+  Duration timeStrToDuration(String time) {
     final List<String> timeParts = time.split(":");
     if (timeParts.length == 2) {
       final int minutes = int.parse(timeParts[0]);
@@ -166,4 +166,3 @@ class TimesDataManager {
     return times;
   }
 }
-

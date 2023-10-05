@@ -1,4 +1,5 @@
 import 'package:ccswim_viz/core/swimmer_search/bloc/all_swimmer_times/all_swimmer_times_bloc.dart';
+import 'package:ccswim_viz/core/swimmer_search/bloc/selected_time/selected_time_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:ccswim_viz/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -148,7 +149,10 @@ class _SwimmerLookupTable extends StatelessWidget {
               "(${state.fullnameSearch}) / (${state.clubSearch})", style: TextStyle(color: neutral[1]),
               overflow: TextOverflow.ellipsis,
             ),
-            onRowSelected: (index) => context.read<AllSwimmerTimesBloc>().add(FetchAllSwimmerTimes(fullname: state.swimmers[index]["fullname"], club: state.swimmers[index]["club"])),
+            onRowSelected: (index) {
+              context.read<SelectedTimeBloc>().add(ResetTimeClicked());
+              context.read<AllSwimmerTimesBloc>().add(FetchAllSwimmerTimes(fullname: state.swimmers[index]["fullname"], club: state.swimmers[index]["club"]));
+            },
             onClearPressed: () => context.read<SwimmerSearchBloc>().add(ResetSwimmerSearch()),
           );
         } else {

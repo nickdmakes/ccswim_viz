@@ -1,9 +1,10 @@
+import 'package:ccswim_viz/core/swimmer_search/bloc/selected_time/selected_time_bloc.dart';
 import 'package:ccswim_viz/shared/dashboard_table/dashboard_table.dart';
 import 'package:flutter/material.dart';
 import 'package:ccswim_viz/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'util/times_data_manager.dart';
+import '../../util/times_data_manager.dart';
 import 'cubit/time_filters_cubit.dart';
 import 'widgets/all_times_filters.dart';
 import 'package:ccswim_viz/core/swimmer_search/bloc/all_swimmer_times/all_swimmer_times_bloc.dart';
@@ -150,6 +151,13 @@ class _FilteredTimesTable extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          onRowSelected: (index) {
+            context.read<SelectedTimeBloc>().add(SelectTimeClicked(
+              distance: timesManager.getTimes()[index]["distance"],
+              stroke: timesManager.getTimes()[index]["stroke"],
+              time: timesManager.getTimes()[index]["time"],
+            ));
+          },
           onClearPressed: () => context.read<AllSwimmerTimesBloc>().add(ResetAllSwimmerTimes()),
         );
       }

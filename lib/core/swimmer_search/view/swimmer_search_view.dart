@@ -4,6 +4,8 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:ccswim_viz/shared/dashboard_card/dashboard_card.dart';
 import '../widgets/swimmer_lookup_panel/swimmer_lookup_panel.dart';
 import '../widgets/all_swimmer_times_panel/all_swimmer_times_panel.dart';
+import '../widgets/swimmer_summary_panel/swimmer_summary_panel.dart';
+import '../widgets/event_graph_panel/event_graph_panel.dart';
 
 class SwimmerSearchView extends StatelessWidget {
   const SwimmerSearchView({super.key});
@@ -32,6 +34,12 @@ class _MobileSwimmerSearchDashboard extends StatelessWidget {
         DashboardCard(
           child: AllSwimmerTimesPanel(),
         ),
+        DashboardCard(
+          child: EventGraphPanel(),
+        ),
+        DashboardCard(
+          child: SwimmerSummaryPanel(),
+        ),
       ],
     );
   }
@@ -42,19 +50,40 @@ class _DesktopSwimmerSearchDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return const Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: DashboardCard(
-            child: SwimmerLookupPanel(),
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: DashboardCard(
+                child: SwimmerLookupPanel(),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: DashboardCard(
+                child: AllSwimmerTimesPanel(),
+              ),
+            ),
+          ],
         ),
-        Expanded(
-          flex: 2,
-          child: DashboardCard(
-            child: AllSwimmerTimesPanel(),
-          ),
-        ),
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: DashboardCard(
+                child: SwimmerSummaryPanel(),
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: DashboardCard(
+                child: EventGraphPanel(),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
