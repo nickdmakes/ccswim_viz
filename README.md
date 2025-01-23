@@ -90,6 +90,6 @@ See `LICENSE` for more information.
 
 Nick Matthews - nickd.mf7@gmail.com  
 
-Project Link: [https://github.com/nickmatthews713/blackjai-server](https://github.com/nickmatthews713/ccswim_viz)
+Project Link: [https://github.com/nickmatthews713/ccswim_viz](https://github.com/nickmatthews713/ccswim_viz)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
