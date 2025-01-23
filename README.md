@@ -4,8 +4,6 @@
 
   <p align="center">
     Individual time search and visualization tool for College Club Swimming Athletes
-    <br />
-    <h2><a href="https://ccswimviz.com">www.ccswimviz.com</a></h2>
   </p>
 </div>
 
@@ -47,9 +45,11 @@ This public codebase works alongside other private Github repositories to make t
 
 ### Built With
 
+* Google Cloud Platform (CCP)
+* Digital Ocean VM
 * Flutter
 * Dart
-* Github Actions
+* Github Actions (DevOps)
 
 
 <!-- GETTING STARTED -->
