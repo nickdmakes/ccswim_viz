@@ -46,6 +46,7 @@ This public codebase works alongside other private Github repositories to make t
 ### Built With
 
 * Google Cloud Platform (CCP)
+* Azure
 * Digital Ocean VM
 * Flutter
 * Dart
